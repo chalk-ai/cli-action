@@ -1,0 +1,26 @@
+name: GitHub Action for Chalk
+description: Wraps the Chalk CLI tool to enable deploying and managing Chalk apps
+author: Chalk
+branding:
+  icon: square
+  color: gray-dark
+runs:
+  using: node16
+  main: dist/index.js
+inputs:
+  version:
+    description: 'Version of the Chalk CLI to install. If unspecified or set to "latest", the latest version for the target platform will be installed.'
+    default: latest
+    required: false
+  client-id:
+    description: 'The client ID to use for requests to Chalk.'
+    required: true
+  client-secret:
+    description: 'The client secret to use for requests to Chalk.'
+    required: true
+  environment:
+    description: 'The Chalk environment to use.'
+    required: false
+  api-host:
+    description: "If you're using a self-hosted deployment, the API host where Chalk is hosted."
+    required: false
