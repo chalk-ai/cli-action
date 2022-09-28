@@ -18,7 +18,6 @@ steps:
   with:
     client-id: ...
     client-secret: ...
-    environment: ...
 ```
 
 A specific version of the `chalk` CLI can be installed:
@@ -37,9 +36,9 @@ The action supports the following inputs:
 
 - `client-id`: The Chalk Client ID from the tokens page in your settings.
 - `client-secret`: The Chalk Client Secret from the tokens page in your settings.
-- `environment` (optional): The Chalk environment to use.
-- `version` (optional): The version of `chalk` to install, defaulting to `latest`
+- `version` (optional): The version of `chalk` to install, defaulting to `latest`.
 - `api-host` (optional): If you're using a self-hosted deployment, the API host where Chalk is hosted.
+- `environment` (optional): The Chalk environment to use. Your token is typically scoped to a single environment, and you won't need to use this parameter.
 
 ## License
 Apache 2.0
