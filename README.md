@@ -8,16 +8,19 @@ This action can be run on `ubuntu-latest`, `windows-latest`, and `macos-latest`
 GitHub Actions runners, and will install and expose a specified version of the 
 `chalk` CLI on the runner environment.
 
-## Usage
+## Deploying to a branch
 
-Set up the `chalk` CLI:
+Set up the `chalk` CLI and use it to deploy to a branch:
 
 ```yaml
 steps:
 - uses: chalk-ai/cli-action@v1
   with:
-    client-id: ...
-    client-secret: ...
+    client-id: token-dlkanvoinohnaon4oindoivn
+    client-secret: ts-5901039nlbm3n537el367b9025dc305
+
+- name: Deploy to branch
+  run: chalk apply --branch ${{ github.head_ref || github.ref_name }}
 ```
 
 A specific version of the `chalk` CLI can be installed:
@@ -27,8 +30,11 @@ steps:
 - uses: chalk-ai/cli-action@v1
   with:
     version: 1.1.0
-    client-id: ...
-    client-secret: ...
+    client-id: token-dlkanvoinohnaon4oindoivn
+    client-secret: ts-5901039nlbm3n537el367b9025dc305
+
+- name: Deploy to branch
+  run: chalk apply --branch ${{ github.head_ref || github.ref_name }}
 ```
 
 ## Inputs
