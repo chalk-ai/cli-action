@@ -1,4 +1,4 @@
-name: GitHub Action for Chalk
+name: Chalk CLI
 description: Wraps the Chalk CLI tool to enable deploying and managing Chalk apps
 author: Chalk
 branding:
