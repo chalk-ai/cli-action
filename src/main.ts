@@ -27,6 +27,7 @@ async function run() {
     core.addPath(cachedPath)
   }
 
+  core.info(`Writing config to: ${home}/.config/.chalk.yml`)
   fs.writeFileSync(
     `${home}/.config/.chalk.yml`,
     `tokens:
