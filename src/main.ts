@@ -2,9 +2,11 @@ import * as core from '@actions/core'
 import * as http from '@actions/http-client'
 import * as toolCache from '@actions/tool-cache'
 import * as fs from 'fs'
+import * as os from 'os'
 
 const client = new http.HttpClient('setup-chalk-cli')
 const TOOL_NAME = 'chalk'
+const home = os.homedir()
 
 async function run() {
   // Get user-specified version to install (defaults to "latest")
@@ -26,7 +28,7 @@ async function run() {
   }
 
   fs.writeFileSync(
-    '/home/runner/.config/.chalk.yml',
+    `${home}/.config/.chalk.yml`,
     `tokens:
   default:
      name: Default Token
