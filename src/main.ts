@@ -27,7 +27,6 @@ async function run() {
     core.addPath(cachedPath)
   }
 
-  core.info(`Writing config to: ${home}/.config/.chalk.yml`)
   fs.writeFileSync(
     `${home}/.config/.chalk.yml`,
     `tokens:
@@ -41,6 +40,7 @@ async function run() {
     'utf-8',
   )
 
+  core.info(`Writing config to: ${home}/.config/.chalk.yml`)
   core.info(`${TOOL_NAME} is installed`)
 }
 
