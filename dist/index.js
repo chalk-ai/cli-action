@@ -28842,7 +28842,6 @@ async function run() {
      activeEnvironment: ${core.getInput('environment')}
 `, 'utf-8');
     core.info(`Writing config to: ${home}/.config/.chalk.yml`);
-    console.log(`Writing config to: ${home}/.config/.chalk.yml`);
     core.info(`${TOOL_NAME} is installed`);
 }
 async function getLatestVersion(os, arch) {
