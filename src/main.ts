@@ -41,6 +41,7 @@ async function run() {
   )
 
   core.info(`Writing config to: ${home}/.config/.chalk.yml`)
+  console.log(`Writing config to: ${home}/.config/.chalk.yml`)
   core.info(`${TOOL_NAME} is installed`)
 }
 
