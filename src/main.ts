@@ -29,7 +29,7 @@ async function run() {
   const configDir = `${home}/.config/`;
 
   if (!fs.existsSync(configDir)) {
-      fs.mkdirSync(configDir);
+      fs.mkdirSync(configDir, { recursive: true });
   }
 
   fs.writeFileSync(
