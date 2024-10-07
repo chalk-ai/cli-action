@@ -26,9 +26,14 @@ async function run() {
     fs.chmodSync(cachedPath, 0o755)
     core.addPath(cachedPath)
   }
+  const configDir = `${home}/.config/`;
+
+  if (!fs.existsSync(configDir)) {
+      fs.mkdirSync(configDir, { recursive: true });
+  }
 
   fs.writeFileSync(
-    `${home}/.config/.chalk.yml`,
+    `${configDir}/.chalk.yml`,
     `tokens:
   default:
      name: Default Token
