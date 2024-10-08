@@ -14,6 +14,7 @@ async function run() {
   const os = process.platform
   const arch = process.arch
   const version = suppliedVersion == 'latest' ? await getLatestVersion(os, arch) : suppliedVersion
+  const dir = `${home}/.config`
 
   const cachedPath = toolCache.find(TOOL_NAME, version)
   if (cachedPath && version != 'nightly') {
@@ -26,9 +27,17 @@ async function run() {
     fs.chmodSync(cachedPath, 0o755)
     core.addPath(cachedPath)
   }
+  
+  fs.mkdir(dir, { recursive: true }, (err) => {
+    if (err) {
+      core.info(err);
+      return;
+    }
+    core.info(`Created directory ${dir}`);
+  }
 
   fs.writeFileSync(
-    `${home}/.config/.chalk.yml`,
+    `${dir}/.chalk.yml`,
     `tokens:
   default:
      name: Default Token
@@ -40,7 +49,7 @@ async function run() {
     'utf-8',
   )
 
-  core.info(`Writing config to: ${home}/.config/.chalk.yml`)
+  core.info(`Writing config to: ${dir}/.chalk.yml`)
   core.info(`${TOOL_NAME} is installed`)
 }
 
