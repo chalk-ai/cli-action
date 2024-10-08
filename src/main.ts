@@ -28,8 +28,12 @@ async function run() {
     core.addPath(cachedPath)
   }
   
-  if (!fs.existsSync(`${dir}`)) {
-    fs.mkdirSync(`${dir}`)
+  fs.mkdir(dir, { recursive: true }, (err) => {
+    if (err) {
+      core.info(err);
+      return;
+    }
+    core.info(`Created directory ${dir}`);
   }
 
   fs.writeFileSync(
