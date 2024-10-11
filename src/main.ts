@@ -29,7 +29,7 @@ async function run() {
   }
   
   
-  fs.mkdirSync(dir, { recursive: true }, (err) => {
+  await fs.mkdir(dir, { recursive: true }, (err) => {
     if (err) {
       core.info(err);
       return;
@@ -37,7 +37,7 @@ async function run() {
     core.info(`Created directory ${dir}`);
   }
 
-  fs.writeFileSync(
+  await fs.writeFile(
     `${dir}/.chalk.yml`,
     `tokens:
   default:
