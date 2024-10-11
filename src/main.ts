@@ -28,7 +28,8 @@ async function run() {
     core.addPath(cachedPath)
   }
   
-  fs.mkdir(dir, { recursive: true }, (err) => {
+  
+  fs.mkdirSync(dir, { recursive: true }, (err) => {
     if (err) {
       core.info(err);
       return;
