@@ -1,7 +1,8 @@
 import * as core from '@actions/core'
 import * as http from '@actions/http-client'
 import * as toolCache from '@actions/tool-cache'
-import * as fs from 'fs'
+import {promises} from 'fs'
+import * as fs from 'fs';
 import * as os from 'os'
 
 const client = new http.HttpClient('setup-chalk-cli')
@@ -28,16 +29,16 @@ async function run() {
     core.addPath(cachedPath)
   }
   
-  
-  await fs.mkdir(dir, { recursive: true }, (err) => {
-    if (err) {
-      core.info(err);
-      return;
-    }
-    core.info(`Created directory ${dir}`);
-  }
 
-  await fs.writeFile(
+  try {
+    await promises.mkdir(dir, {recursive: true});
+  } catch(e) {
+    core.error(`Failed to create directory ${dir}`);
+    core.error(e as any);
+  }
+  core.info(`Created directory ${dir}`);
+
+  await promises.writeFile(
     `${dir}/.chalk.yml`,
     `tokens:
   default:
@@ -47,7 +48,7 @@ async function run() {
      apiServer: ${core.getInput('api-host') || 'https://api.prod.chalk.ai'}
      activeEnvironment: ${core.getInput('environment')}
 `,
-    'utf-8',
+    {"encoding": "utf-8"},
   )
 
   core.info(`Writing config to: ${dir}/.chalk.yml`)
