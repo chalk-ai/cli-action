@@ -4,6 +4,10 @@ import * as toolCache from '@actions/tool-cache'
 import {promises} from 'fs'
 import * as fs from 'fs';
 import * as os from 'os'
+import { exec } from 'child_process'
+import { promisify } from 'util'
+const execAsync = promisify(exec)
+
 
 const client = new http.HttpClient('setup-chalk-cli')
 const TOOL_NAME = 'chalk'
@@ -28,30 +32,17 @@ async function run() {
     fs.chmodSync(cachedPath, 0o755)
     core.addPath(cachedPath)
   }
-  
 
-  try {
-    await promises.mkdir(dir, {recursive: true});
-  } catch(e) {
-    core.error(`Failed to create directory ${dir}`);
-    core.error(e as any);
-  }
-  core.info(`Created directory ${dir}`);
+  // Run `chalk login --client-id <client id> --client-secret <client secret> --api-host <api host> --environment`
+  // in a subprocess
 
-  await promises.writeFile(
-    `${dir}/.chalk.yml`,
-    `tokens:
-  default:
-     name: Default Token
-     clientId: ${core.getInput('client-id')}
-     clientSecret: ${core.getInput('client-secret')}
-     apiServer: ${core.getInput('api-host') || 'https://api.prod.chalk.ai'}
-     activeEnvironment: ${core.getInput('environment')}
-`,
-    {"encoding": "utf-8"},
-  )
+  const clientId = core.getInput('client-id')
+  const clientSecret = core.getInput('client-secret')
+  const apiHost = core.getInput('api-host') || 'https://api.prod.chalk.ai'
+  const environment = core.getInput('environment')
 
-  core.info(`Writing config to: ${dir}/.chalk.yml`)
+  await execAsync(`${TOOL_NAME} login --client-id ${clientId} --client-secret ${clientSecret} --api-host ${apiHost} --environment ${environment}`)
+
   core.info(`${TOOL_NAME} is installed`)
 }
 

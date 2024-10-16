@@ -28298,9 +28298,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const http = __importStar(__nccwpck_require__(6255));
 const toolCache = __importStar(__nccwpck_require__(7784));
-const fs_1 = __nccwpck_require__(7147);
 const fs = __importStar(__nccwpck_require__(7147));
 const os = __importStar(__nccwpck_require__(2037));
+const child_process_1 = __nccwpck_require__(2081);
+const util_1 = __nccwpck_require__(3837);
+const execAsync = (0, util_1.promisify)(child_process_1.exec);
 const client = new http.HttpClient('setup-chalk-cli');
 const TOOL_NAME = 'chalk';
 const home = os.homedir();
@@ -28323,23 +28325,13 @@ async function run() {
         fs.chmodSync(cachedPath, 0o755);
         core.addPath(cachedPath);
     }
-    try {
-        await fs_1.promises.mkdir(dir, { recursive: true });
-    }
-    catch (e) {
-        core.error(`Failed to create directory ${dir}`);
-        core.error(e);
-    }
-    core.info(`Created directory ${dir}`);
-    await fs_1.promises.writeFile(`${dir}/.chalk.yml`, `tokens:
-  default:
-     name: Default Token
-     clientId: ${core.getInput('client-id')}
-     clientSecret: ${core.getInput('client-secret')}
-     apiServer: ${core.getInput('api-host') || 'https://api.prod.chalk.ai'}
-     activeEnvironment: ${core.getInput('environment')}
-`, { "encoding": "utf-8" });
-    core.info(`Writing config to: ${dir}/.chalk.yml`);
+    // Run `chalk login --client-id <client id> --client-secret <client secret> --api-host <api host> --environment`
+    // in a subprocess
+    const clientId = core.getInput('client-id');
+    const clientSecret = core.getInput('client-secret');
+    const apiHost = core.getInput('api-host') || 'https://api.prod.chalk.ai';
+    const environment = core.getInput('environment');
+    await execAsync(`${TOOL_NAME} login --client-id ${clientId} --client-secret ${clientSecret} --api-host ${apiHost} --environment ${environment}`);
     core.info(`${TOOL_NAME} is installed`);
 }
 async function getLatestVersion(os, arch) {
