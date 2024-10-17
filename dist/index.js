@@ -28331,7 +28331,7 @@ async function run() {
     const clientSecret = core.getInput('client-secret');
     const apiHost = core.getInput('api-host') || 'https://api.prod.chalk.ai';
     const environment = core.getInput('environment');
-    await execAsync(`${TOOL_NAME} login --client-id="${clientId}" --client-secret="${clientSecret}" --api-host "${apiHost}" --environment="${environment}"`);
+    await execAsync(`${TOOL_NAME} login --client-id="${clientId}" --client-secret="${clientSecret}" --api-host "${apiHost}" --environment="${environment}" --no-prompt`);
     core.info(`${TOOL_NAME} is installed`);
 }
 async function getLatestVersion(os, arch) {
