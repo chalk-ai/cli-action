@@ -31,6 +31,7 @@ async function run() {
     const cachedPath = await toolCache.cacheFile(path, TOOL_NAME, TOOL_NAME, version, undefined)
     fs.chmodSync(cachedPath, 0o755)
     core.addPath(cachedPath)
+    core.info(`Downloaded version ${version}`)
   }
 
   // Run `chalk login --client-id <client id> --client-secret <client secret> --api-host <api host> --environment`
@@ -41,7 +42,9 @@ async function run() {
   const apiHost = core.getInput('api-host') || 'https://api.prod.chalk.ai'
   const environment = core.getInput('environment')
 
-  await execAsync(`${TOOL_NAME} login --client-id="${clientId}" --client-secret="${clientSecret}" --api-host "${apiHost}" --environment="${environment}" --no-prompt`)
+  core.info(`Executing 'chalk login'`)
+  await execAsync(`${TOOL_NAME} login --client-id="${clientId}" --client-secret="${clientSecret}" --api-host="${apiHost}" --environment="${environment}" --no-prompt`)
+  core.info(`Executed 'chalk login'`)
 
   core.info(`${TOOL_NAME} is installed`)
 }
