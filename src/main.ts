@@ -43,6 +43,10 @@ async function run() {
   const environment = core.getInput('environment')
 
   core.info(`Executing 'chalk login'`)
+  if (!clientId || !clientSecret) {
+    core.info(`${TOOL_NAME} is installed; skipping authentication because client-id or client-secret is not provided`)
+    return;
+  }
   await execAsync(`${TOOL_NAME} login --client-id="${clientId}" --client-secret="${clientSecret}" --api-host="${apiHost}" --environment="${environment}" --no-prompt`)
   core.info(`Executed 'chalk login'`)
 
