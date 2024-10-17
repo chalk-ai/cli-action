@@ -41,7 +41,7 @@ async function run() {
   const apiHost = core.getInput('api-host') || 'https://api.prod.chalk.ai'
   const environment = core.getInput('environment')
 
-  await execAsync(`${TOOL_NAME} login --client-id ${clientId} --client-secret ${clientSecret} --api-host ${apiHost} --environment ${environment}`)
+  await execAsync(`${TOOL_NAME} login --client-id="${clientId}" --client-secret="${clientSecret}" --api-host "${apiHost}" --environment="${environment}"`)
 
   core.info(`${TOOL_NAME} is installed`)
 }
