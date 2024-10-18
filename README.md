@@ -37,6 +37,12 @@ steps:
   run: chalk apply --branch ${{ github.head_ref || github.ref_name }}
 ```
 
+## Compatibility
+
+`cli-action@v2` has no `chalk` version constraints.
+
+`cli-action@v3` requires `chalk >= 1.24.18`, which permits `chalk login` to accept no environment flags.
+
 ## Inputs
 The action supports the following inputs:
 
